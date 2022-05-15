@@ -11,28 +11,219 @@
 #include <string.h>
 #include <ctype.h>
 
-void getInt (char* mensaje, int* entero)
+											//VALIDACIONES NUMEROS//
+//FLOAT//
+int getFloat(float* resultado, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos)
 {
-    printf(mensaje);
-    scanf("%d", entero);
+	int retorno;
+	float auxiliarFloat;
+	int i;
+
+	retorno = -1;
+
+	if (resultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0)
+	{
+		for (i = reintentos; i > -1; i--)
+		{
+			printf("%s", mensaje);
+			fflush(stdin);
+			scanf("%f", &auxiliarFloat);
+			if (auxiliarFloat > minimo && auxiliarFloat < maximo)
+			{
+				*resultado = auxiliarFloat ;
+				retorno = 0;
+				break;
+			}else{
+				printf("\nEl numero ingresado no esta dentro del limite(%d-%d), intente nuevamente\n",minimo, maximo);
+			}
+		}
+	}
+	return retorno;
 }
 
-void getFloat (char* mensaje, float* flotante)
+//INT//
+int getInt(char mensaje[], char mensajeError[], int minimo, int maximo, int reintentos)
 {
-    printf(mensaje);
-    scanf("%f", flotante);
+	int retorno;
+	int resultado;
+
+	retorno = -1;
+
+	if (mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos > 0)
+	{
+		do{
+			printf("%s", mensaje);
+			scanf("%d", &resultado);
+
+			if (resultado > minimo && resultado < maximo)
+			{
+				retorno = resultado;
+				break;
+			}else{
+				printf("\nEl numero ingresado no esta dentro del limite(%d-%d), intente nuevamente\n",minimo, maximo);
+			}
+			reintentos--;
+		} while (reintentos > 0);
+	}
+	return retorno;
 }
 
-void getString(char* mensaje, char* cadena)
-{
-    printf(mensaje);
-    fflush(stdin);
-    gets(cadena);
+				/* **************************VALIDACION CARACTERES*************************** */
+//
+int getChar(char resultado[], char *mensaje, char *mensajeError, int reintentos) {
+	int retorno;
+	char auxiliarChar[100];
+
+	retorno = -1;
+
+	if (resultado != NULL && mensaje != NULL && mensajeError != NULL && reintentos >= 0)
+	{
+		while (reintentos > -1)
+		{
+			reintentos--;
+
+			printf("%s", mensaje);
+			fflush(stdin);
+
+			scanf("%s", auxiliarChar);
+
+			strcpy(auxiliarChar, resultado);
+			retorno = 0;
+			break;
+		}
+	}
+	return retorno;
 }
 
-void getChar (char* mensaje, char* caracter)
+int getStringLetras(char mensaje[], char input[])
 {
-    printf(mensaje);
-    fflush(stdin);
-    scanf("%c",caracter);
+	char aux[256];
+	int retorno;
+	retorno = -1;
+	int intentos;
+
+	intentos = 5;
+
+	do{
+		getString(mensaje, aux);
+		if (soloLetras(aux))
+		{
+			strlwr(aux);
+			aux[0] = toupper(aux[0]);
+
+			strcpy(input, aux);
+			retorno = 0;
+		}else{
+			intentos--;
+			printf(
+					"no se ah ingresado solo letras intente nuevamente(quedan %d intentos):",
+					intentos);
+			if (intentos == 0)
+			{
+				retorno = -2;
+				break;
+			}
+		}
+	} while (retorno == -1);
+
+	return retorno;
+}
+
+void getString(char mensaje[],char input[])
+{
+    printf("%s",mensaje);
+    scanf ("%s", input);
+}
+
+int soloLetras(char str[])
+{
+	int i = 0;
+	int retorno;
+
+	retorno = -1;
+
+	while (str[i] != '\0')
+	{
+		if ((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
+			retorno = 0;
+		i++;
+	}
+	return retorno;
+}
+
+int getNumeros(char mensaje[])
+{
+	int numeroIngresado;
+	int retorno;
+	int intentos;
+
+	intentos = 5;
+
+	retorno = -1;
+
+	do {
+		numeroIngresado = getDataNum(mensaje);
+		if (isdigit(numeroIngresado) != 0)
+		{
+			retorno = numeroIngresado;
+		} else {
+			intentos--;
+			printf(
+					"no se ah ingresado solo numeros intente nuevamente(quedan %d intentos):",
+					intentos);
+			if (intentos == 0)
+			{
+				retorno = -2;
+				break;
+			}
+		}
+	} while (retorno == -1);
+	return retorno;
+}
+
+int getDataNum(char mensaje[])
+{
+	int retorno;
+
+	printf(mensaje);
+	scanf("%d", &retorno);
+
+	return retorno;
+}
+
+int validacionS_N(char *texto)
+{
+	int validacionUsuario;
+	printf("%s\n"
+			"1) SI\n"
+			"2) NO\n", texto);
+	scanf("%d", &validacionUsuario);
+	while (validacionUsuario != 1 && validacionUsuario != 2)
+	{
+		printf("ERROR, Ingrese una opcion correcta:\n"
+				"%s\n"
+				"1) SI\n"
+				"2) NO\n",texto);
+		scanf("%d", &validacionUsuario);
+	}
+	return validacionUsuario;
+}
+
+int validacionS_NParametrizadoInt(char *texto, int parametro)
+{
+	int validacion;
+	printf(" %s\n %d\n"
+			"1) SI"
+			"2) NO", texto, parametro);
+	scanf("%d", &validacion);
+
+	while (validacion < 1 && validacion > 2)
+	{
+		printf("ERROR, elija una de las opciones:\n"
+				" %s\n %d\n"
+				"1) SI"
+				"2) NO", texto, parametro);
+		scanf("%d", &validacion);
+	}
+	return validacion;
 }

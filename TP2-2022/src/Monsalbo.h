@@ -8,14 +8,25 @@
 #ifndef MONSALBO_H_
 #define MONSALBO_H_
 
-void getInt (char* mensaje, int* entero);
-
-void getFloat (char* mensaje, float* flotante);
-
-void getString (char* mensaje, char* cadena);
-
-void getChar (char* mensaje, char* caracter);
-
-int mostrarMenu(void);
 
 #endif /* MONSALBO_H_ */
+
+int getFloat(float* resultado, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos);
+
+int getInt(char mensaje[], char mensajeError[], int minimo, int maximo, int reintentos);
+
+int getChar(char resultado[], char *mensaje, char *mensajeError, int reintentos);
+
+int getStringLetras(char mensaje[], char input[]);
+
+void getString(char mensaje[],char input[]);
+
+int soloLetras(char str[]);
+
+int getNumeros(char mensaje[]);
+
+int getDataNum(char mensaje[]);
+
+int validacionS_N(char *texto);
+
+int validacionS_NParametrizadoInt(char *texto, int parametro);

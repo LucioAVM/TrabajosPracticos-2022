@@ -15,51 +15,73 @@
 #include "Pasajeros.h"
 #include "Menu.h"
 
-#define TAM 5//cambiar a 2000
-
+#define TAM 2000
 
 int main(void)
 {
 	setbuf(stdout, NULL);
 
 	int menu;
-	int idPasajero;
-	//int validacion;//cambiar nombre
 
 	ePasajero listaPrincipalPasajeros[TAM];
-
-	idPasajero = 0;
 
 	if(ePasajeros_Inicializar(listaPrincipalPasajeros,TAM))
 	{
 		printf("Error al inicializar el programa, reiniciene intente nuevamente.\n");
 	}
 
-	menu = mostrarMenu();
+	do{
+		menu = mostrarMenu();
 
-	switch(menu)
-	{
-	case 1:
-		if(AltaEmpleado(listaPrincipalPasajeros, TAM, &idPasajero))//si la funcion devuelve 0 es verdadero(usar para validar)
+		switch(menu)
 		{
+		case 1:
+			if(altaPasajero(listaPrincipalPasajeros,TAM))//si la funcion devuelve 0 es verdadero(usar para validar)
+			{
+				printf("\n-----Pasajero dado de alta exitosamente----\n");
+			}else{
+				printf("\nAh ocurrido un error, intente nuevamente\n");
+			}
+			break;
 
+		case 2:
+			if(modificarpasajero(listaPrincipalPasajeros, TAM))
+			{
+				printf("Pasajero se ah modificado exitosamente");
+			}else{
+				printf("Ah ocurrido un error, intente nuevamente");
+			}
+			break;
+
+		case 3:
+			if(bajaPasajero(listaPrincipalPasajeros, TAM))
+			{
+				printf("Pasajero se dado de baja exitosamente");
+			}else{
+				printf("Ah ocurrido un error, intente nuevamente");
+			}
+			break;
+
+		case 4:
+			ordenarPasajeros(listaPrincipalPasajeros, TAM);
+			break;
+
+
+		case 5:
+			hardcodeoPasajeros(listaPrincipalPasajeros);
+			break;
+
+		case 6:
+			printf( "\n           GRACIAS POR UTILIZAR ESTE PROGRAMA\n"
+									"             PRODUCIDO POR Monsalbo lucio\n"
+									"              EDITADO POR Lucio Monsalbo\n"
+									"         BUILDEADO POR Alejandro Lucio Monsalbo\n"
+									"        TESTEADO POR Valerio Alejandro Monsalbo\n"
+									"        ENVIADO POR Monsalbo Lucio Alejandro Valerio\n"
+									"   AGRADECIMIENTO ESPECIAL A Lucio Alejandro Valerio Monsalbo\n");
+			break;
 		}
-		break;
-
-	case 2:
-		break;
-
-	case 3:
-		break;
-
-	case 4:
-		printf("1. Listado de los pasajeros ordenados alfabéticamente por Apellido y Tipo de pasajero.\n\n"
-				"2. Total y promedio de los precios de los pasajes, y cuántos pasajeros superan el precio promedio.\n\n"
-				"3. Listado de los pasajeros por Código de vuelo y estados de vuelos ‘ACTIVO’\n\n");
-		fflush(stdin);
-		scanf("%d", &menu);
-		break;
-	}
+	}while(menu != 6);
 
 	return EXIT_SUCCESS;
 }
