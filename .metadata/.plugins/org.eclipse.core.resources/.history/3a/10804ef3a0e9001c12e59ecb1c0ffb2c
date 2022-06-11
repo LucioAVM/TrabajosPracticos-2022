@@ -1,0 +1,113 @@
+/*
+ * Usuario.c
+ *
+ *  Created on: 10 jun. 2022
+ *      Author: UGIO
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "Monsalbo.h"
+
+int DatosUsuario(int AoM, char* id, char nombre[], char apellido[], char precio[], char tipoPasajero[], char codigoVuelo[], char estado[])
+{
+	int retorno;
+	int menu;
+
+	int validacionNombre;
+	int validacionApellido;
+
+	retorno = 0;
+
+	//PIDE DATOS DEL PASAJERO AL USUARIO
+	if(nombre != NULL && apellido != NULL && precio != NULL && tipoPasajero && codigoVuelo != NULL && estado != NULL)
+	{
+		do
+		{
+			//SUBMENU
+			if(AoM != 1)
+			{
+				printf( "MENU MODIFICACION PASAJEROS/n"
+									"--------------------------/n"
+									"1- Nombre/n"
+									"2- Apellido/n"
+									"3- Precio/n"
+									"4- Tipo de Pasajero/n"
+									"5- Codigo de vuelo/n"
+									"6- Estado del vuelo/n");
+			}
+
+			if((menu == 1 && AoM == 1) || AoM == 0)
+			{
+				 //NOMBRE
+				validacionNombre = getStringLetras("\n\nIngresar nombre del pasajero:\t", nombre);
+				if(validacionNombre == -1)
+				{
+					printf("\n\nERROR, no se pudo ingresar correctamente el nombre \n");
+				}
+			}
+
+			if((menu == 2 && AoM == 1) || AoM == 0)
+			{
+				//APELLIDO
+				validacionApellido = getStringLetras("\n\nIngresar apellido del pasajero:\t", apellido);
+				if(validacionApellido == -1)
+				{
+					printf("\nERROR, no se pudo ingresar correctamente el apellido \n");
+				}
+			}
+
+			if((menu == 3 && AoM == 1) || AoM == 0)
+			{
+				int getSoloNumeros("\n\nIngresar precio del vuelo:\t","\nERROR", "Ingresar precio del vuelo:\t", precio);
+				//PRECIO DE VUELO
+			}
+
+
+			if((menu == 4 && AoM == 1) || AoM == 0)
+			{
+				//TIPO DE PASAJERO
+			tipoPasajero = getInt("\n\nIngrese tipo de pasajero:\t","\nERROR, Ingrese tipo de pasajero:\t", 0,5,5);
+			}
+
+			if((menu == 5 && AoM == 1) || AoM == 0)
+			{
+				//CODIGO DE VUELO
+				getString("\n\nIngrese codigo del vuelo: \t", codigoVuelo);
+			}
+
+			if((menu == 6 && AoM == 1) || AoM == 0)
+			{
+				//ESTADO DEL VUELO
+				estado = getInt("\n\nIngrese estado del vuelo\t","\nERROR, Ingrese estado del vuelo\t", 0, 3, 5);
+			}
+		}while(menu != 7 || AoM == 0);
+
+	}
+
+	return retorno;
+}
+
+int cargar_nuevoId(LinkedList* pArrayListPassenger)
+{
+	ePasajero* auxPasajero;
+
+    int retorno;
+    int id;
+    int i;
+    int auxId;
+
+    retorno = -1;
+    for(i=0;i<ll_len(pArrayListPassenger);i++)
+    {
+        auxPasajero = ll_get(pArrayListPassenger,i);
+        ePasajero_getId(auxPasajero,&auxId);
+        if(auxId > id)
+        {
+            id = auxId;
+        }
+    }
+    retorno = id + 1;
+    return retorno;
+}

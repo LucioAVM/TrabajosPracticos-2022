@@ -1,0 +1,25 @@
+16:45:56 **** Incremental Build of configuration Debug for project TP3-2022 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\TipoPasajero.o" "..\\src\\TipoPasajero.c" 
+..\src\TipoPasajero.c: In function 'iniciarTipoPasajero':
+..\src\TipoPasajero.c:19:4: warning: braces around scalar initializer
+   19 |    {1,"EconomyClass"},
+      |    ^
+..\src\TipoPasajero.c:19:4: note: (near initialization for 'estructuraTipoPasajero.tipoPasajeroInt')
+..\src\TipoPasajero.c:19:7: warning: excess elements in scalar initializer
+   19 |    {1,"EconomyClass"},
+      |       ^~~~~~~~~~~~~~
+..\src\TipoPasajero.c:19:7: note: (near initialization for 'estructuraTipoPasajero.tipoPasajeroInt')
+..\src\TipoPasajero.c:20:7: warning: initialization of 'char' from 'char *' makes integer from pointer without a cast [-Wint-conversion]
+   20 |    {2,"FirstClass"},
+      |       ^~~~~~~~~~~~
+..\src\TipoPasajero.c:20:7: note: (near initialization for 'estructuraTipoPasajero.tipoPasajeroChar[1]')
+..\src\TipoPasajero.c:21:4: error: extra brace group at end of initializer
+   21 |    {3,"ExecutiveClass"}
+      |    ^
+..\src\TipoPasajero.c:21:4: note: (near initialization for 'estructuraTipoPasajero')
+..\src\TipoPasajero.c:21:4: warning: excess elements in struct initializer
+..\src\TipoPasajero.c:21:4: note: (near initialization for 'estructuraTipoPasajero')
+
+16:45:57 Build Failed. 1 errors, 4 warnings. (took 137ms)
+

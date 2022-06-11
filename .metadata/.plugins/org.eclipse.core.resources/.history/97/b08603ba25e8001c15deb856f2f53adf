@@ -1,0 +1,21 @@
+/*
+ * Monsalbo.c
+ *
+ *  Created on: 9 jun. 2022
+ *      Author: UGIO
+ */
+
+int solostring(char* string)
+{
+    int i;
+    int retorno = 1;
+    for(i=0;i<strlen(string);i++)
+    {
+        if((string[i]<'a' || string[i]>'z') && (string[i]<'A' || string[i]>'Z'))
+        {
+            retorno = 0;
+            break;
+        }
+    }
+    return retorno;
+}
