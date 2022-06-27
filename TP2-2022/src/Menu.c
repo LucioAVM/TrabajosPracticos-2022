@@ -21,7 +21,7 @@ int mostrarMenu(void)
 			"3. BAJA\n\n"
 			"4. INFORMACION\n\n"
 			"5. HARDCODEO\n\n"
-			"6. FINALIZAR PROGRAMA\n"
+			"6. FINALIZAR PROGRAMA\n\n"
 			"Ingrese una opcion:\t");
 	fflush(stdin);
 	scanf("%d", &retorno);
@@ -29,23 +29,24 @@ int mostrarMenu(void)
 	return retorno;
 }
 
-int altaPasajero(ePasajero listaPrincipalPasajeros[],int TAM)
+int altaPasajero(ePasajero listaPrincipalPasajeros[],int TAM, int* id)
 {
 	int retorno = 0;
 	int validacion;
 
+	int auxId;
 	char nombre[51];
 	char apellido[51];
 	float precioVuelo;
 	char codigoVuelo[10];
 	int estadoVuelo;
 	int tipoVuelo;
-	int idPasajero;
+
+	auxId = *id;
 
 	int validacionNombre;
 	int validacionApellido;
 
-	idPasajero = 0;
 	int libre;
 
 	//recorre la lista buscando el primer lugar libre y lo devuelve si lo encuentra
@@ -82,7 +83,7 @@ int altaPasajero(ePasajero listaPrincipalPasajeros[],int TAM)
 
 		validacion = addPasajeros(listaPrincipalPasajeros
 				, libre
-				, &idPasajero
+				, &auxId
 				, nombre
 				, apellido
 				, precioVuelo
@@ -93,7 +94,7 @@ int altaPasajero(ePasajero listaPrincipalPasajeros[],int TAM)
 		if(validacion == 1)
 		{
 			retorno = 1;
-
+			*id = auxId;
 		}
 	}else{
 		printf("\nNo se encontro lugar libre en el sistema");
@@ -179,16 +180,15 @@ int modificarpasajero(ePasajero listaPrincipalPasajeros[], int TAM)
 			case 6://queres aplicar las modificaciones (mostrar modificasiones Si o NO
 				do
 				{
-
 					printf( "ORIGINAL:"
-							" ____________________________________________________________________________________________________________\n"
-							"|---ID-------NOMBRE-------APELLIDO-------PRECIO-------CODIGO DE VUELO-------TIPO DE PASAJERO-------ESTADO DEL VUELO---| \n");
-					mostrarUnPasajero(auxiliar, TAM);
-
-					printf( "MODIFICADO:"
 							" __________________________________________________________________________________________________________\n"
 							"|---ID-------NOMBRE-------APELLIDO-------PRECIO-------CODIGO DE VUELO-------TIPO DE PASAJERO-------ESTADO DEL VUELO---| \n");
 					mostrarUnPasajero(listaPrincipalPasajeros[index], TAM);
+
+					printf( "MODIFICADO:"
+							" ____________________________________________________________________________________________________________\n"
+							"|---ID-------NOMBRE-------APELLIDO-------PRECIO-------CODIGO DE VUELO-------TIPO DE PASAJERO-------ESTADO DEL VUELO---| \n");
+					mostrarUnPasajero(auxiliar, TAM);
 
 					printf("\nDesea realizar las siguientes modificaciones?\n"
 							"1_ SI\n"
@@ -262,13 +262,16 @@ int bajaPasajero(ePasajero listaPrincipalPasajeros[], int TAM)
 void ordenarPasajeros(ePasajero listaPrincipalPasajeros[], int TAM)
 {
 	int menu;
+	int bandera;
 
-	printf("LISTADOS:\n"
-			"1- Alfabéticamente por apellido y Tipo de pasajero\n"
+	printf("\nLISTADOS:\n"
+			"1- Alfabeticamente por apellido y Tipo de pasajero\n"
 			"2- Total y promedio de precios de vuelos y quienes lo superan\n"
 			"3-Por codigo con estado de vuelo 'ACTIVO'\n");
 	fflush(stdin);
 	scanf("%d", &menu);
+
+	bandera = 0;
 
 	switch(menu)
 	{
@@ -277,31 +280,46 @@ void ordenarPasajeros(ePasajero listaPrincipalPasajeros[], int TAM)
 		break;
 	case 2:
 		mostrarTotalYPromedioPrecioPasajerosSuperiorPromedio( listaPrincipalPasajeros, TAM);
+		bandera = 1;
 		break;
 	case 3:
 		ordenarPasajerosPorCodigo(listaPrincipalPasajeros, TAM);
+		bandera = 1;
 		break;
 	}
 
-	mostrarPasajeros(listaPrincipalPasajeros, TAM);
+	if(bandera != 1)
+	{
+		mostrarPasajeros(listaPrincipalPasajeros, TAM);
+	}
+
 }
 
-void hardcodeoPasajeros(ePasajero listaPrincipalPasajeros[])
+void hardcodeoPasajeros(ePasajero listaPrincipalPasajeros[], int* id)
 {
 	int i;
+	int auxiliarId;
+
+	//agregar funcion que genere id para cada uno
 
 	ePasajero hardcodeo[]=
 	{
-			{1,"Aquiles","Bailo",1126,"ABC123",1,2},
-			{2,"Chanchope","Golzales",8853,"570j86",2,1},
-			{3,"Milanesa","Papas Fritas",3312,"hambre123",1,2},
-			{4,"Aitor","Menta",5647,"dgn465",2,2},
-			{5,"Aitor","Tilla",6845,"645tjd",1,1}
+			{1,"Aquiles","Bailo",1126,"ABC123",1,2,1},
+			{2,"Chanchope","Golzales",8853,"zxrj86",2,1,1},
+			{3,"Milanesa","Papas Fritas",3312,"hambre123",1,2,1},
+			{4,"Aitor","Menta",5647,"dgn465",2,2,1},
+			{5,"Aitor","Tilla",6845,"dat462",1,1,1}
 	};
 
-	for(i = 0; i < 5; i++)
+	for(i = 0; i < 5; i++)//hacer que se carguen al final del array
 	{
 		listaPrincipalPasajeros[i] = hardcodeo[i];
+
+		auxiliarId = ePasajeros_ObtenerID(*id);
+		*id = auxiliarId;
+
+		listaPrincipalPasajeros[i].id = auxiliarId;
+
 	}
 
 }

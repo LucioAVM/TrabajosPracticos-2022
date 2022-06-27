@@ -1,5 +1,6 @@
-20:14:47 **** Incremental Build of configuration Debug for project TP2--2022 ****
+18:51:48 **** Incremental Build of configuration Debug for project TP2--2022 ****
 Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Pasajeros.o" "..\\src\\Pasajeros.c" 
 gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Menu.o" "..\\src\\Menu.c" 
 gcc -o TP2--2022.exe "src\\Menu.o" "src\\Monsalbo.o" "src\\Pasajeros.o" "src\\TP2--2022.o" 
 Info: Nothing to build for TP2--2022

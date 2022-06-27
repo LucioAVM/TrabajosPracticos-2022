@@ -193,11 +193,18 @@ void ordenarPasajerosPorApellidoYTipo(ePasajero listaPrincipalPasajeros[], int T
     	for(j=i+1; j<TAM; j++)
     	{
     		retornoCmp = strcmp(listaPrincipalPasajeros[i].apellido, listaPrincipalPasajeros[j].apellido);
-    		if(retornoCmp == 1)
+    		if(retornoCmp < 0)
     		{
     			auxiliar = listaPrincipalPasajeros[i];
     			listaPrincipalPasajeros[i] = listaPrincipalPasajeros[j];
     			listaPrincipalPasajeros[j] = auxiliar;
+    		}else{
+    			if(retornoCmp == 0 && (listaPrincipalPasajeros[i].tipoPasajero < listaPrincipalPasajeros[j].tipoPasajero))
+    			{
+    				auxiliar = listaPrincipalPasajeros[i];
+    				listaPrincipalPasajeros[i] = listaPrincipalPasajeros[j];
+    				listaPrincipalPasajeros[j] = auxiliar;
+    			}
     		}
     	}
     }
@@ -234,7 +241,7 @@ void mostrarTotalYPromedioPrecioPasajerosSuperiorPromedio(ePasajero listaPrincip
 
         pasajerosSuperiorPromedio = pasajerosSuperanSalarioPromedio(listaPrincipalPasajeros, TAM, promedioPrecio);
 
-        printf("\nEmpleados cargados hasta el momento: ");
+        printf("\nEmpleados cargados hasta el momento: \n");
         mostrarPasajeros(listaPrincipalPasajeros, TAM);
 
         printf("\nEl total del precio de los pasajes es: %.2f", sumaPrecio);
@@ -295,19 +302,33 @@ void ordenarPasajerosPorCodigo(ePasajero listaPrincipalPasajeros[], int TAM)
 
   ePasajero auxiliar;
 
-
   for(i=0; i<TAM-1; i++)
   {
 	  for(j=i+1; j<TAM; j++)
 	  {
-		  retornoCmp = strcmp(listaPrincipalPasajeros[i].codigoViaje, listaPrincipalPasajeros[j].codigoViaje);
-
-		  if(retornoCmp == 1 && (listaPrincipalPasajeros[i].estadoVuelos == 1 && listaPrincipalPasajeros[j].estadoVuelos == 1))
 		  {
-			  auxiliar = listaPrincipalPasajeros[i];
-			  listaPrincipalPasajeros[i] = listaPrincipalPasajeros[j];
-			  listaPrincipalPasajeros[j] = auxiliar;
+			  retornoCmp = strcmp(listaPrincipalPasajeros[i].codigoViaje, listaPrincipalPasajeros[j].codigoViaje);
+
+			  printf("%d", retornoCmp);
+
+			  if(retornoCmp > 0 && listaPrincipalPasajeros[i].isEmpty == OCUPADO && listaPrincipalPasajeros[j].isEmpty == OCUPADO)
+			  {
+				  	  auxiliar = listaPrincipalPasajeros[i];
+				  	  listaPrincipalPasajeros[i] = listaPrincipalPasajeros[j];
+				  	  listaPrincipalPasajeros[j] = auxiliar;
+			  }
 		  }
 	  }
   }
+  printf( " _____________________________________________________________________________________________________________________\n"
+		  "|---ID-------NOMBRE-------APELLIDO-------PRECIO-------CODIGO DE VUELO-------TIPO DE PASAJERO-------ESTADO DEL VUELO---| \n");
+
+  	for(i = 0; i < TAM; i++)
+  	{
+  		if(listaPrincipalPasajeros[i].isEmpty == OCUPADO && listaPrincipalPasajeros[i].estadoVuelos == 1)
+  		{
+  			mostrarUnPasajero(listaPrincipalPasajeros[i],TAM);
+  		}
+  	}
+  	printf( "|_____________________________________________________________________________________________________________________| \n");
 }

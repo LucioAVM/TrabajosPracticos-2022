@@ -26,7 +26,7 @@
  */
 int mostrarMenu(void);
 
-int altaPasajero(ePasajero listaPrincipalPasajeros[],int TAM);
+int altaPasajero(ePasajero listaPrincipalPasajeros[],int TAM, int* id);
 
 int modificarpasajero(ePasajero listaPrincipalPasajeros[], int TAM);
 
@@ -34,4 +34,4 @@ int bajaPasajero(ePasajero listaPrincipalPasajeros[], int TAM);
 
 void ordenarPasajeros(ePasajero listaPrincipalPasajeros[], int TAM);
 
-void hardcodeoPasajeros(ePasajero listaPrincipalPasajeros[]);
+void hardcodeoPasajeros(ePasajero listaPrincipalPasajeros[],int* id);
