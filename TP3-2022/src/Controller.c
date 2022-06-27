@@ -135,7 +135,7 @@ int controller_altaPasajero(LinkedList* pArrayListPassenger)
 
 			pasajero = ePasajero_newParametros(id, nombre, apellido, precio, tipoPasajero, codigoVuelo, estado);
 	}
-    return 1;//VALIDAR QUE ESTE ABIERTO EL ARCHIVO ANTES
+    return 1;
 }
 
 /** \brief Modificar datos de pasajero
@@ -263,6 +263,17 @@ int controller_ordenarPasajeros(LinkedList* pArrayListPassenger)
 			"Listar por: ");
 	fflush(stdin);
 	scanf("%s",subMenu);
+
+	switch(subMenu)
+	{
+	case 1:
+		int ll_sort(LinkedList* pArrayListPassenger, int (*pFunc)(void* ,void*), int order);
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	}
 
     return 1;
 }
