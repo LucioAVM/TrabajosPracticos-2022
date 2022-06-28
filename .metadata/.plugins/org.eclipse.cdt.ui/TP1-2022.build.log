@@ -1,9 +1,1 @@
-18:39:24 **** Rebuild of configuration Release for project TP1-2022 ****
-Info: Internal Builder is used for build
-gcc -O3 -Wall -c -fmessage-length=0 -o "src\\CalculosAuxiliares.o" "..\\src\\CalculosAuxiliares.c" 
-gcc -O3 -Wall -c -fmessage-length=0 -o "src\\Menu.o" "..\\src\\Menu.c" 
-gcc -O3 -Wall -c -fmessage-length=0 -o "src\\TP1-2022.o" "..\\src\\TP1-2022.c" 
-gcc -o TP1-2022.exe "src\\CalculosAuxiliares.o" "src\\Menu.o" "src\\TP1-2022.o" 
-
-18:39:25 Build Finished. 0 errors, 0 warnings. (took 537ms)
-
+Info: Nothing to build for TP1-2022

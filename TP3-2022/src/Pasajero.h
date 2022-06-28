@@ -2,7 +2,7 @@
  * Pasajero.h
  *
  *  Created on: 9 jun. 2022
- *      Author: UGIO
+ *      Author: Monsalbo Lucio
  */
 
 #ifndef PASAJERO_H_

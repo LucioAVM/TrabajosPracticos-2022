@@ -28,34 +28,45 @@
     10. Salir
 *****************************************************/
 
-
+#include "LinkedList.h"
+#define TAM 10
 
 int main()
 {
     int option = 0;
+    char path[25];
 
-   // LinkedList* listaPasajeros = ll_newLinkedList();
+    LinkedList* pArrayListPassenger = ll_newLinkedList();
+
     do{
         switch(option)
         {
             case 1:
-               // controller_loadFromText("data.csv",listaPasajeros);
+            	controller_cargarDesdeTexto(path , pArrayListPassenger);
                  break;
             case 2:
+            	controller_cargarDesdeBinario(path , pArrayListPassenger);
                 break;
             case 3:
+            	controller_altaPasajero(pArrayListPassenger);
                 break;
             case 4:
+            	controller_modificarPasajero(pArrayListPassenger);
                 break;
             case 5:
+            	controller_bajaPasajero(pArrayListPassenger);
                 break;
             case 6:
+            	controller_ListarPasajeros(pArrayListPassenger);
                 break;
             case 7:
+            	controller_ordenarPasajeros(pArrayListPassenger);
                 break;
             case 8:
+            	controller_GuardarComoTexto(path ,pArrayListPassenger);
                 break;
             case 9:
+            	controller_GuardarComoBinario(path , pArrayListPassenger);
                 break;
             case 10:
                 break;

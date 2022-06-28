@@ -2,7 +2,7 @@
  * Controller.h
  *
  *  Created on: 9 jun. 2022
- *      Author: UGIO
+ *      Author: Monsalbo Lucio
  */
 
 #ifndef CONTROLLER_H_
@@ -22,7 +22,7 @@ int mostrarMenu(void);
  * \return int
  *
  */
-int controller_cargarDesdeTexto(char* path , LinkedList* pArrayListPassenger[]);
+int controller_cargarDesdeTexto(char* path , LinkedList* pArrayListPassenger);
 
 
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo binario).

@@ -7,14 +7,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "parser.h"
 #include "LinkedList.h"
 #include "Pasajero.h"
-#include "Estado.h"
-#include "TipoPasajero.h"
 #include "Pasajero.h"
 #include "Usuario.h"
 
+
+/************************************************************************************************************
+ *                                            MENU															*
+ * 																											*
+ ************************************************************************************************************/
 int mostrarMenu(void)
 {
 	int menu;
@@ -26,7 +30,7 @@ int mostrarMenu(void)
 	{
 		if(bandera > 0)
 		{
-			printf("Error, ingrese una opcion valida:/n/n");
+			printf("\nError, ingrese una opcion valida:/n/n");
 		}
 		printf("       Menu Pasajeros/n"
 			   "       --------------/n/n"
@@ -51,14 +55,12 @@ int mostrarMenu(void)
 }
 
 
-/** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
-int controller_cargarDesdeTexto(char* path , LinkedList* pArrayListPassenger[])
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    1															*
+ ************************************************************************************************************/
+int controller_cargarDesdeTexto(char* path , LinkedList* pArrayListPassenger)
 {
 	FILE* pArchivo = NULL;
 
@@ -75,13 +77,12 @@ int controller_cargarDesdeTexto(char* path , LinkedList* pArrayListPassenger[])
     return 1;
 }
 
-/** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    2															*
+ ************************************************************************************************************/
 int controller_cargarDesdeBinario(char* path , LinkedList* pArrayListPassenger)
 {
     int retorno;
@@ -102,13 +103,12 @@ int controller_cargarDesdeBinario(char* path , LinkedList* pArrayListPassenger)
     return retorno;
 }
 
-/** \brief Alta de pasajero
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    3															*
+ ************************************************************************************************************/
 int controller_altaPasajero(LinkedList* pArrayListPassenger)
 {
 	ePasajero* pasajero;
@@ -128,34 +128,41 @@ int controller_altaPasajero(LinkedList* pArrayListPassenger)
 
 	if(pArrayListPassenger != NULL)
 	{
-		DatosUsuario(nombre, apellido, precio, tipoPasajero, codigoVuelo, estado);//falta validacion
+			id = cargar_nuevoId(pArrayListPassenger);
 
-			pasajero = ePasajero_new();
-			id = cargar_nuevoId();
+			pasajero = ePasajero_newParametros((char*)id, nombre, apellido, precio, tipoPasajero, codigoVuelo, estado);
 
-			pasajero = ePasajero_newParametros(id, nombre, apellido, precio, tipoPasajero, codigoVuelo, estado);
+			ll_add(pArrayListPassenger, pasajero);
+
+			retorno = 0;
 	}
-    return 1;
+    return retorno;
 }
 
-/** \brief Modificar datos de pasajero
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    4															*
+ ************************************************************************************************************/
 int controller_modificarPasajero(LinkedList* pArrayListPassenger)
 {
-    int retorno = -1;
+    int retorno;
     int id;
     int opcion;
-    char nombre[128];
-    char apellido[128];
-    char codigoVuelo[128];
+    char nombre[50];
+    char apellido[50];
+    char codigoVuelo[4];
     int tipoPasajero;
     float precio;
     int estado;
+
+
+    char tipoPasajeroStr[3];
+    char precioStr[5];
+    char estadoStr[3];
+
+    retorno = -1;
 
     ePasajero* auxPasajero;
 
@@ -163,8 +170,8 @@ int controller_modificarPasajero(LinkedList* pArrayListPassenger)
     {
         printf("/nIngrese el id del pasajero a modificar: ");
         scanf("%d",&id);
-        auxPasajero = buscarUsuarioPorId(pArrayListPassenger,id);
-        if(auxPasajero != NULL)
+        id = buscarUsuarioPorId(pArrayListPassenger,id);
+        if(id != -1)
         {
         	printf( "/nMENU MODIFICACION PASAJEROS/n"
         			"--------------------------/n"
@@ -180,37 +187,40 @@ int controller_modificarPasajero(LinkedList* pArrayListPassenger)
             {
 
             case 1:// NOMBRE
-            	nombre = validacionNombre();
+            	get_Nombre(nombre);
                 ePasajero_setNombre(auxPasajero,nombre);
                 break;
 
 
             case 2:// APELLIDO
-            	apellido = validacionApellido();
+            	get_Apellido(apellido);
                 ePasajero_setApellido(auxPasajero,apellido);
                 break;
 
 
             case 3:// PRECIO
-            	precio = validacionPrecio();
+            	get_Precio(precioStr);
+            	precio = atof(precioStr);
             	ePasajero_setPrecio(auxPasajero,precio);
                 break;
 
 
             case 4:// TIPO DE PASAJERO
-            	tipoPasajero = tipoPasajero = validacionTipoPasajero();
+            	get_TipoPasajero(tipoPasajeroStr);
+            	tipoPasajero = parsearTipoPasajeroAEstructura(tipoPasajeroStr);
                 ePasajero_setTipoPasajero(auxPasajero,tipoPasajero);
                 break;
 
 
             case 5:// CODIGO DE VUELO
-            	codigoVuelo = validacionCodigoVuelo();
+            	get_CodigoVuelo(codigoVuelo);
                 ePasajero_setCodigoVuelo(auxPasajero,codigoVuelo);
                 break;
 
 
             case 6:// ESTADO DEL VUELO
-            	estado = validacionEstadoVuelo();
+            	get_EstadoVuelo(estadoStr);
+            	estado = parsearEstadoPasajeroAEstructura(estadoStr);
             	ePasajero_setEstado(auxPasajero,estado);
                 break;
             }
@@ -220,37 +230,34 @@ int controller_modificarPasajero(LinkedList* pArrayListPassenger)
     return retorno;
 }
 
-/** \brief Baja de pasajero
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    5															*
+ ************************************************************************************************************/
 int controller_bajaPasajero(LinkedList* pArrayListPassenger)
 {
     return 1;
 }
 
-/** \brief Listar pasajeros
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    6															*
+ ************************************************************************************************************/
 int controller_ListarPasajeros(LinkedList* pArrayListPassenger)
 {
     return 1;
 }
 
-/** \brief Ordenar pasajeros
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    7															*
+ ************************************************************************************************************/
 int controller_ordenarPasajeros(LinkedList* pArrayListPassenger)
 {
 	int subMenu;
@@ -262,12 +269,12 @@ int controller_ordenarPasajeros(LinkedList* pArrayListPassenger)
 			"3- Codigo de Vuelo/n"
 			"Listar por: ");
 	fflush(stdin);
-	scanf("%s",subMenu);
+	scanf("%s", &subMenu);
 
 	switch(subMenu)
 	{
 	case 1:
-		int ll_sort(LinkedList* pArrayListPassenger, int (*pFunc)(void* ,void*), int order);
+		ll_sort(LinkedList* pArrayListPassenger, int (*pFunc)(void* ,void*), int order);
 		break;
 	case 2:
 		break;
@@ -278,13 +285,12 @@ int controller_ordenarPasajeros(LinkedList* pArrayListPassenger)
     return 1;
 }
 
-/** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    8															*
+ ************************************************************************************************************/
 int controller_GuardarComoTexto(char* path , LinkedList* pArrayListPassenger)
 {
 	int retorno;
@@ -316,21 +322,19 @@ int controller_GuardarComoTexto(char* path , LinkedList* pArrayListPassenger)
 }
 
 
-/** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListPassenger LinkedList*
- * \return int
- *
- */
+
+/************************************************************************************************************
+ *                                           OPCION															*
+ * 											    9															*
+ ************************************************************************************************************/
 int controller_GuardarComoBinario(char* path , LinkedList* pArrayListPassenger)
 {
 	int retorno;
-	FILE* pArchivoBinario;
-	ePasajero* pasajero;
 	int tam;
 	int i;
 
+	FILE* pArchivoBinario;
+	ePasajero* pasajero;
 
 	retorno = -1;
 	tam = ll_len(pArrayListPassenger);

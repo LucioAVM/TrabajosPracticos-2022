@@ -2,15 +2,15 @@
  * Pasajero.c
  *
  *  Created on: 9 jun. 2022
- *      Author: UGIO
+ *      Author: Monsalbo Lucio
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "LinkedList.h"
 #include "Pasajero.h"
-#include "tipoPasajero.h"
 #include "Monsalbo.h"
+#include "Parser.h"
 
 /******************************************************************************************************
 											Nuevo
@@ -54,13 +54,9 @@ ePasajero* ePasajero_newParametros(char* idStr, char* nombreStr, char* apellidoS
 
         precio = atoi(precioStr);
 
-        tipoPasajero = parsearTipoPasajeroAEstructura(tipoPasajeroStr, estructuraTipoPasajero);
+        tipoPasajero = parsearTipoPasajeroAEstructura(tipoPasajeroStr);
 
-        estado = parsearEstadoPasajeroAEstructura(estadoStr, estructuraIsEmpty);
-
-//tipo pasajero
-
-//estado pasajero
+        estado = parsearEstadoPasajeroAEstructura(estadoStr);
 
         pPasajero = ePasajero_new();
 
@@ -90,6 +86,27 @@ void ePasajero_delete(ePasajero* this)
 /******************************************************************************************************
 											  ID
  ******************************************************************************************************/
+
+int cargar_nuevoId(LinkedList* pArrayListPassenger)
+{
+	int retorno;
+	int tam;
+
+	retorno = -1;
+
+	ePasajero* auxPasajero;
+
+	if(pArrayListPassenger)
+	{
+		tam = ll_len(pArrayListPassenger);
+
+		auxPasajero = ll_get(pArrayListPassenger,tam);
+
+		retorno = (auxPasajero->id) +1;
+	}
+	return retorno;
+}
+
 
 int ePasajero_setId(ePasajero* this,int id)
 {

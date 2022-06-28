@@ -1,25 +1,24 @@
-16:45:56 **** Incremental Build of configuration Debug for project TP3-2022 ****
+18:00:06 **** Incremental Build of configuration Debug for project TP3-2022 ****
 Info: Internal Builder is used for build
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\TipoPasajero.o" "..\\src\\TipoPasajero.c" 
-..\src\TipoPasajero.c: In function 'iniciarTipoPasajero':
-..\src\TipoPasajero.c:19:4: warning: braces around scalar initializer
-   19 |    {1,"EconomyClass"},
-      |    ^
-..\src\TipoPasajero.c:19:4: note: (near initialization for 'estructuraTipoPasajero.tipoPasajeroInt')
-..\src\TipoPasajero.c:19:7: warning: excess elements in scalar initializer
-   19 |    {1,"EconomyClass"},
-      |       ^~~~~~~~~~~~~~
-..\src\TipoPasajero.c:19:7: note: (near initialization for 'estructuraTipoPasajero.tipoPasajeroInt')
-..\src\TipoPasajero.c:20:7: warning: initialization of 'char' from 'char *' makes integer from pointer without a cast [-Wint-conversion]
-   20 |    {2,"FirstClass"},
-      |       ^~~~~~~~~~~~
-..\src\TipoPasajero.c:20:7: note: (near initialization for 'estructuraTipoPasajero.tipoPasajeroChar[1]')
-..\src\TipoPasajero.c:21:4: error: extra brace group at end of initializer
-   21 |    {3,"ExecutiveClass"}
-      |    ^
-..\src\TipoPasajero.c:21:4: note: (near initialization for 'estructuraTipoPasajero')
-..\src\TipoPasajero.c:21:4: warning: excess elements in struct initializer
-..\src\TipoPasajero.c:21:4: note: (near initialization for 'estructuraTipoPasajero')
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c: In function 'controller_ordenarPasajeros':
+..\src\Controller.c:272:10: warning: format '%s' expects argument of type 'char *', but argument 2 has type 'int' [-Wformat=]
+  272 |  scanf("%s",subMenu);
+      |         ~^  ~~~~~~~
+      |          |  |
+      |          |  int
+      |          char *
+..\src\Controller.c:277:11: error: expected expression before 'LinkedList'
+  277 |   ll_sort(LinkedList* pArrayListPassenger, int (*pFunc)(void* ,void*), int order);
+      |           ^~~~~~~~~~
+..\src\Controller.c:277:3: error: too few arguments to function 'll_sort'
+  277 |   ll_sort(LinkedList* pArrayListPassenger, int (*pFunc)(void* ,void*), int order);
+      |   ^~~~~~~
+In file included from ..\src\Usuario.h:11,
+                 from ..\src\Controller.c:15:
+..\src\LinkedList.h:73:5: note: declared here
+   73 | int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);
+      |     ^~~~~~~
 
-16:45:57 Build Failed. 1 errors, 4 warnings. (took 137ms)
+18:00:06 Build Failed. 2 errors, 1 warnings. (took 134ms)
 

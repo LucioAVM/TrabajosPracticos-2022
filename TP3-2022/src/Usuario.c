@@ -2,21 +2,19 @@
  * Usuario.c
  *
  *  Created on: 10 jun. 2022
- *      Author: UGIO
+ *      Author: Monsalbo Lucio
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Usuario.h"
 #include "Monsalbo.h"
+
 
 int altaDatosUsuario(char* id, char nombre[], char apellido[], char precio[], char tipoPasajero[], char codigoVuelo[], char estado[])
 {
 	int retorno;
-	int menu;
-
-	int validacionNombre;
-	int validacionApellido;
 
 	retorno = 0;
 
@@ -24,24 +22,24 @@ int altaDatosUsuario(char* id, char nombre[], char apellido[], char precio[], ch
 	if(nombre != NULL && apellido != NULL && precio != NULL && tipoPasajero && codigoVuelo != NULL && estado != NULL)
 	{
 				   //NOMBRE
-		nombre = validacionNombre();
+		get_Nombre(nombre);
 
 				   //APELLIDO
-		apellido = validacionApellido();
+		get_Apellido(apellido);
 
 				//PRECIO DE VUELO
-		precio = validacionPrecio();
+		get_Precio(precio);
 
 
 				//TIPO DE PASAJERO
-		tipoPasajero = tipoPasajero = validacionTipoPasajero();
+		get_TipoPasajero(tipoPasajero);
 
 
 				//CODIGO DE VUELO
-		codigoVuelo = validacionCodigoVuelo();
+		get_CodigoVuelo(codigoVuelo);
 
 				//ESTADO DEL VUELO
-		estado = validacionEstadoVuelo();
+		get_EstadoVuelo(estado);
 	}
 
 	return retorno;
@@ -94,10 +92,8 @@ int buscarUsuarioPorId(LinkedList* pArrayListPassenger,int id)
     return retorno;
 }
 
-char* validacionNombre()
-{
-	char nombre[];
-	int validacion;
+void get_Nombre(char* nombre)
+{	int validacion;
 
 	validacion = getStringLetras("\n\nIngresar nombre del pasajero:\t", nombre);
 	if(validacion == -1)
@@ -106,13 +102,10 @@ char* validacionNombre()
 
 		strcpy(nombre,"");
 	}
-
-	return nombre;
 }
 
-char* validacionApellido()
+void get_Apellido(char* apellido)
 {
-	char apellido[];
 	int validacion;
 
 	validacion = getStringLetras("\n\nIngresar apellido del pasajero:\t", apellido);
@@ -123,12 +116,11 @@ char* validacionApellido()
 		strcpy(apellido,"");
 	}
 
-	return apellido;
 }
 
-char* validacionPrecio()
+float get_Precio()
 {
-	char precio[];
+	float precio;
 	int validacion;
 
 	validacion = getSoloNumeros("\n\nIngresar precio del vuelo:\t","\nERROR", "Ingresar precio del vuelo:\t", precio);
@@ -141,9 +133,8 @@ char* validacionPrecio()
 	return precio;
 }
 
-char* validacionTipoPasajero()
+void get_TipoPasajero(char* tipoPasajero)
 {
-	char tipoPasajero[];
 	int validacion;
 	int bandera;
 
@@ -166,22 +157,18 @@ char* validacionTipoPasajero()
 		}
 	}while(bandera != -1);
 
-	return tipoPasajero;
 }
 
-char* validacionCodigoVuelo()
+void get_CodigoVuelo(char* codigoVuelo)
 {
-	char codigoVuelo[];
 	int validacion;
 
 	getString("\n\nIngrese codigo del vuelo: \t", codigoVuelo);
 
-	return codigoVuelo;
 }
 
-char* validacionEstadoVuelo()
+void get_EstadoVuelo(char* estado)
 {
-	char estado[];
 	int validacion;
 	int bandera;
 

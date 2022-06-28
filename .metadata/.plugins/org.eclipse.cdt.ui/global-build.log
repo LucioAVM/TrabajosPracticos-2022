@@ -1,6 +1,21 @@
-18:51:48 **** Incremental Build of configuration Debug for project TP2--2022 ****
+18:00:06 **** Incremental Build of configuration Debug for project TP3-2022 ****
 Info: Internal Builder is used for build
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Pasajeros.o" "..\\src\\Pasajeros.c" 
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Menu.o" "..\\src\\Menu.c" 
-gcc -o TP2--2022.exe "src\\Menu.o" "src\\Monsalbo.o" "src\\Pasajeros.o" "src\\TP2--2022.o" 
-Info: Nothing to build for TP2--2022
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Controller.o" "..\\src\\Controller.c" 
+..\src\Controller.c: In function 'controller_ordenarPasajeros':
+..\src\Controller.c:272:10: warning: format '%s' expects argument of type 'char *', but argument 2 has type 'int' [-Wformat=]
+  272 |  scanf("%s",subMenu);
+      |         ~^  ~~~~~~~
+      |          |  |
+      |          |  int
+      |          char *
+..\src\Controller.c:277:11: error: expected expression before 'LinkedList'
+  277 |   ll_sort(LinkedList* pArrayListPassenger, int (*pFunc)(void* ,void*), int order);
+      |           ^~~~~~~~~~
+..\src\Controller.c:277:3: error: too few arguments to function 'll_sort'
+  277 |   ll_sort(LinkedList* pArrayListPassenger, int (*pFunc)(void* ,void*), int order);
+      |   ^~~~~~~
+In file included from ..\src\Usuario.h:11,
+                 from ..\src\Controller.c:15:
+..\src\LinkedList.h:73:5: note: declared here
+   73 | int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);
+      |     ^~~~~~~
