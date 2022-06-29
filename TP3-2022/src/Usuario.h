@@ -21,18 +21,18 @@ void get_Nombre(char* nombre);
 
 void get_Apellido(char* apellido);
 
-void get_Precio(char* precio);
+float get_Precio(char* precioStr);
 
 void get_TipoPasajero(char* tipoPasajero);
 
 void get_CodigoVuelo(char* codigoVuelo);
 
-char* get_EstadoVuelo(char* estado);
+void get_EstadoVuelo(char* estado);
 
-void ordenarPasajerosPorNombre(ePasajero listaPrincipalPasajeros[], int TAM);
+int ordenarPasajeros_Nombre(void* pElement1, void* pElement2);
 
-void ordenarPasajerosPorApellido(ePasajero listaPrincipalPasajeros[], int TAM);
+int ordenarPasajeros_Apellido(void* pElement1, void* pElement2);
 
-void ordenarPasajerosPorCodigo(ePasajero listaPrincipalPasajeros[], int TAM);
+int ordenarPasajeros_Codigo(void* pElement1, void* pElement2);
 
 #endif /* USUARIO_H_ */

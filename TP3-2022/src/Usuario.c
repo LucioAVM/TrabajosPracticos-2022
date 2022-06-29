@@ -118,24 +118,24 @@ void get_Apellido(char* apellido)
 
 }
 
-float get_Precio()
+float get_Precio(char* precioStr)
 {
 	float precio;
 	int validacion;
 
-	validacion = getSoloNumeros("\n\nIngresar precio del vuelo:\t","\nERROR", "Ingresar precio del vuelo:\t", precio);
+	validacion = getSoloNumeros("\n\nIngresar precio del vuelo:\t","\nERROR, Ingresar precio del vuelo:\t", precioStr);
 	if(validacion == -1)
 	{
 		printf("\nERROR, no se pudo establecer correctamente el precio \n");
 
-		strcpy(precio,"");//comparar en setprecio y cambiar a 0
+		strcpy(precioStr,"");//comparar en setprecio y cambiar a 0
 	}
+	precio = atof(precioStr);
 	return precio;
 }
 
 void get_TipoPasajero(char* tipoPasajero)
 {
-	int validacion;
 	int bandera;
 
 	bandera = 0;
@@ -150,7 +150,9 @@ void get_TipoPasajero(char* tipoPasajero)
 				"Tipo de Pasajero: ");
 		fflush(stdin);
 		scanf("%s",tipoPasajero);
-		if(tipoPasajero != "EconomyClass" && tipoPasajero != "FirstClass" && tipoPasajero != "ExecutiveClass")
+
+		if(!(strcmp(tipoPasajero,"EconomyClass")) && !(strcmp(tipoPasajero,"FirstClass"))
+				&& !(strcmp(tipoPasajero,"ExecutiveClass")))
 		{
 			bandera = -1;
 			printf("/nERROR, ingrese una de las 3 opciones validas/n");
@@ -161,15 +163,11 @@ void get_TipoPasajero(char* tipoPasajero)
 
 void get_CodigoVuelo(char* codigoVuelo)
 {
-	int validacion;
-
 	getString("\n\nIngrese codigo del vuelo: \t", codigoVuelo);
-
 }
 
 void get_EstadoVuelo(char* estado)
 {
-	int validacion;
 	int bandera;
 
 	bandera = 0;
@@ -184,86 +182,64 @@ void get_EstadoVuelo(char* estado)
 				"Estado del vuelo: ");
 		fflush(stdin);
 		scanf("%s",estado);
-		if(estado != "En Horario" && estado != "Aterrizado" && estado != "Demorado")
+
+		if(!(strcmp(estado,"En Horario")) && !(strcmp(estado,"En Aterrizado"))&&
+				!(strcmp(estado,"En Demorado")))
 		{
 			bandera = -1;
 			printf("/nERROR, ingrese una de las 3 opciones validas/n");
 		}
 	}while(bandera != -1);
 
-	return estado;
 }
 
-void ordenarPasajerosPorNombre(ePasajero listaPrincipalPasajeros[], int TAM)
+int ordenarPasajeros_Nombre(void* pElement1, void* pElement2)
 {
-  int i;
-  int j;
-  int retornoCmp;
+	int retorno;//1 o -1
 
-  ePasajero auxiliar;
+	char str_1[25];
+	char str_2[25];
 
-    for(i=0; i<TAM-1; i++)
-    {
-        for(j=i+1; j<TAM; j++)
-        {
-            retornoCmp = strcmp(listaPrincipalPasajeros[i].nombre, listaPrincipalPasajeros[j].nombre);
+	retorno = 0;//no hace nada en ll_sort
 
-            if(retornoCmp == 1 && (listaPrincipalPasajeros[i].estado != 4 && listaPrincipalPasajeros[j].estado != 4))
-            {
-                auxiliar = listaPrincipalPasajeros[i];
-                listaPrincipalPasajeros[i] = listaPrincipalPasajeros[j];
-                listaPrincipalPasajeros[j] = auxiliar;
-            }
-        }
-    }
+	if(!(ePasajero_getNombre(pElement1,str_1)) && !(ePasajero_getNombre(pElement2,str_2)))
+	{
+		retorno = strcmp(str_1,str_2);
+	}
+
+	return retorno;
 }
 
-void ordenarPasajerosPorApellido(ePasajero listaPrincipalPasajeros[], int TAM)
+int ordenarPasajeros_Apellido(void* pElement1, void* pElement2)
 {
-  int i;
-  int j;
-  int retornoCmp;
+	int retorno;//1 o -1
 
-  ePasajero auxiliar;
+	char str_1[25];
+	char str_2[25];
 
-    for(i=0; i<TAM-1; i++)
-    {
-        for(j=i+1; j<TAM; j++)
-        {
-            retornoCmp = strcmp(listaPrincipalPasajeros[i].apellido, listaPrincipalPasajeros[j].apellido);
+	retorno = 0;//no hace nada en ll_sort
 
-            if(retornoCmp == 1 && (listaPrincipalPasajeros[i].estado != 4 && listaPrincipalPasajeros[j].estado != 4))
-            {
-                auxiliar = listaPrincipalPasajeros[i];
-                listaPrincipalPasajeros[i] = listaPrincipalPasajeros[j];
-                listaPrincipalPasajeros[j] = auxiliar;
-            }
-        }
-    }
+	if(!(ePasajero_getApellido(pElement1,str_1)) && !(ePasajero_getApellido(pElement2,str_2)))
+	{
+		retorno = strcmp(str_1,str_2);
+	}
+
+	return retorno;
 }
 
-
-void ordenarPasajerosPorCodigo(ePasajero listaPrincipalPasajeros[], int TAM)
+int ordenarPasajeros_Codigo(void* pElement1, void* pElement2)
 {
-  int i;
-  int j;
-  int retornoCmp;
+	int retorno;//1 o -1
 
-  ePasajero auxiliar;
+	char str_1[25];
+	char str_2[25];
 
+	retorno = 0;//no hace nada en ll_sort
 
-  for(i=0; i<TAM-1; i++)
-  {
-	  for(j=i+1; j<TAM; j++)
-	  {
-		  retornoCmp = strcmp(listaPrincipalPasajeros[i].codigoVuelo, listaPrincipalPasajeros[j].codigoVuelo);
+	if(!(ePasajero_getCodigoVuelo(pElement1,str_1)) && !(ePasajero_getCodigoVuelo(pElement2,str_2)))
+	{
+		retorno = strcmp(str_1,str_2);
+	}
 
-		  if(retornoCmp == 1 && (listaPrincipalPasajeros[i].estado != 4 && listaPrincipalPasajeros[j].estado != 4))
-		  {
-			  auxiliar = listaPrincipalPasajeros[i];
-			  listaPrincipalPasajeros[i] = listaPrincipalPasajeros[j];
-			  listaPrincipalPasajeros[j] = auxiliar;
-		  }
-	  }
-  }
+	return retorno;
 }

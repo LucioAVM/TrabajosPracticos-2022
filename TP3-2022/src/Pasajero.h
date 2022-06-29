@@ -8,6 +8,8 @@
 #ifndef PASAJERO_H_
 #define PASAJERO_H_
 
+#include "LinkedList.h"
+
 typedef struct
 {
 	int id;
@@ -42,9 +44,16 @@ int ePasajero_getTipoPasajero(ePasajero* this,int* tipoPasajero);
 int ePasajero_setPrecio(ePasajero* this,float precio);
 int ePasajero_getPrecio(ePasajero* this,float* precio);
 
-int ePasajero_setEstado(ePasajero* this,float estado);
-int ePasajero_getEstado(ePasajero* this,float* estado);
+int ePasajero_setEstado(ePasajero* this,int estado);
+int ePasajero_getEstado(ePasajero* this,int* estado);
 
+int mostrarUnPasajero(LinkedList* listaServicios, int index);
+
+void mostrarPasajeros(LinkedList* pArrayListPassenger);
+
+int validacion_gets(ePasajero* servicio, int* id, char nombre[], char apellido[], float* precio, int* tipoPasajero, char codigoVuelo[], int* estado);
+
+int buscarPorId(LinkedList* pArrayListPassenger, int id);
 //agregar estados
 
 #endif /* PASAJERO_H_ */

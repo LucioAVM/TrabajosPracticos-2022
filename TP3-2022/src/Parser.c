@@ -3,9 +3,9 @@
  *
  *  Created on: 9 jun. 2022
  *      Author: Monsalbo Lucio
- */
+*/
+
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "Pasajero.h"
 #include "LinkedList.h"

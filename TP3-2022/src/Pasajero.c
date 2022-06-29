@@ -87,27 +87,6 @@ void ePasajero_delete(ePasajero* this)
 											  ID
  ******************************************************************************************************/
 
-int cargar_nuevoId(LinkedList* pArrayListPassenger)
-{
-	int retorno;
-	int tam;
-
-	retorno = -1;
-
-	ePasajero* auxPasajero;
-
-	if(pArrayListPassenger)
-	{
-		tam = ll_len(pArrayListPassenger);
-
-		auxPasajero = ll_get(pArrayListPassenger,tam);
-
-		retorno = (auxPasajero->id) +1;
-	}
-	return retorno;
-}
-
-
 int ePasajero_setId(ePasajero* this,int id)
 {
     int retorno = -1;
@@ -261,7 +240,7 @@ int ePasajero_getPrecio(ePasajero* this,float* precio)
 											Estado
  ******************************************************************************************************/
 
-int ePasajero_setEstado(ePasajero* this,float estado)
+int ePasajero_setEstado(ePasajero* this,int estado)
 {
     int retorno = -1;
     if(this != NULL && estado >= 0)
@@ -271,7 +250,7 @@ int ePasajero_setEstado(ePasajero* this,float estado)
     }
     return retorno;
 }
-int ePasajero_getEstado(ePasajero* this,float* estado)
+int ePasajero_getEstado(ePasajero* this, int* estado)
 {
     int retorno = -1;
     if(this != NULL && estado != NULL)
@@ -280,4 +259,114 @@ int ePasajero_getEstado(ePasajero* this,float* estado)
         retorno = 0;
     }
     return retorno;
+}
+
+
+int mostrarUnPasajero(LinkedList* pArrayListPassenger, int index)
+{
+	ePasajero* pasajero = NULL;
+
+	int retorno;
+
+	int id;
+	char nombre[50];
+	char apellido[50];
+	float precio;
+	int tipoPasajero;
+	char codigoVuelo[4];
+	int estado;
+
+	retorno = -1;
+
+	pasajero = (ePasajero*) ll_get(pArrayListPassenger, index);
+
+	if(!(validacion_gets(pasajero, &id, nombre, apellido, &precio, &tipoPasajero, codigoVuelo, &estado)))
+	{
+		printf("%d      %s      %s      %f.2       %d        %s      %d\n",id, nombre, apellido, precio, tipoPasajero, codigoVuelo, estado);
+
+		retorno = 0;
+	}
+	return retorno;
+}
+
+
+void mostrarPasajeros(LinkedList* pArrayListPassenger)
+{
+	int tam;
+	int i;
+
+	tam = ll_len(pArrayListPassenger);
+
+	printf("Listado de Pasajeros:\n"
+			"-ID-------Nombre-------Apellido-------Precio-------Tipo-------Codigo-------Estado-\n");
+
+	if(tam > 0)
+	{
+		for(i = 0 ; i < tam ; i++)
+		{
+			if(!mostrarUnPasajero(pArrayListPassenger, i))
+			{
+				printf("error al cargar el pasajero en la pocision N° %d\n", i);
+			}
+		}
+	}
+}
+
+
+int validacion_gets(ePasajero* pasajero, int* id, char nombre[], char apellido[], float* precio, int* tipoPasajero, char codigoVuelo[], int* estado)
+{
+	int retorno;
+
+	retorno = -1;
+
+	if(pasajero != NULL && id != NULL && nombre != NULL && apellido != NULL && precio != NULL && tipoPasajero != NULL && codigoVuelo!= NULL
+			&& estado != NULL)
+	{
+		if((!(ePasajero_getId(pasajero,id)) &&
+				!(ePasajero_getNombre(pasajero,nombre)) &&
+				!(ePasajero_getApellido(pasajero,apellido)) &&
+				!(ePasajero_getPrecio(pasajero,precio)) &&
+				!(ePasajero_getTipoPasajero(pasajero,tipoPasajero)) &&
+				!(ePasajero_getCodigoVuelo(pasajero,codigoVuelo)) &&
+				!(ePasajero_getEstado(pasajero,estado))))
+		{
+			retorno = 0;
+		}
+	}
+
+	return retorno;
+}
+
+
+int buscarPorId(LinkedList* pArrayListPassenger, int id)
+{
+	int tam;
+	int i;
+	int contador;
+	int retorno;
+	int idAux;
+
+	contador = 0;
+
+	ePasajero* pasajero;
+
+	tam = ll_len(pArrayListPassenger);
+
+	if(tam > 0)
+		{
+			for(i = 0 ; i < tam ; i++)
+			{
+				pasajero = (ePasajero*) ll_get(pArrayListPassenger, i);
+
+				ePasajero_getId(pasajero,&idAux);
+
+				if(idAux == id)
+				{
+					retorno = contador;
+				}else{
+					contador++;
+				}
+			}
+		}
+	return retorno;
 }

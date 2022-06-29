@@ -28,23 +28,40 @@
     10. Salir
 *****************************************************/
 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "Controller.h"
+#include "Usuario.h"
+#include "Pasajero.h"
 #include "LinkedList.h"
+
 #define TAM 10
 
 int main()
 {
+	setbuf(stdout,NULL);
+
     int option = 0;
     char path[25];
 
     LinkedList* pArrayListPassenger = ll_newLinkedList();
 
     do{
+    	option = mostrarMenu();
+
         switch(option)
         {
             case 1:
+            	printf("ingrese el nombre del archivo que desea cargar\n");
+            	fflush(stdout);
+            	scanf("%s",path);
             	controller_cargarDesdeTexto(path , pArrayListPassenger);
                  break;
             case 2:
+            	printf("ingrese el nombre del archivo que desea cargar\n");
+            	fflush(stdout);
+            	scanf("%s",path);
             	controller_cargarDesdeBinario(path , pArrayListPassenger);
                 break;
             case 3:
@@ -69,8 +86,16 @@ int main()
             	controller_GuardarComoBinario(path , pArrayListPassenger);
                 break;
             case 10:
+            	printf( "\n           GRACIAS POR UTILIZAR ESTE PROGRAMA\n"
+            		"             PRODUCIDO POR Monsalbo lucio\n"
+					"              EDITADO POR Lucio Monsalbo\n"
+					"         BUILDEADO POR Alejandro Lucio Monsalbo\n"
+					"        TESTEADO POR Valerio Alejandro Monsalbo\n"
+					"        ENVIADO POR Monsalbo Lucio Alejandro Valerio\n"
+					"   AGRADECIMIENTO ESPECIAL A Lucio Alejandro Valerio Monsalbo\n");
                 break;
         }
     }while(option != 10);
-    return 0;
+
+    return EXIT_SUCCESS;
 }

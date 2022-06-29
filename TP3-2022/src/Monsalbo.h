@@ -20,4 +20,5 @@ int getFloat(float* resultado, char* mensaje, char* mensajeError, int minimo, in
 
 int getInt(char mensaje[], char mensajeError[], int minimo, int maximo, int reintentos);
 
+int getSoloNumeros(char mensaje[], char mensajeError[], char input[]);
 #endif /* MONSALBO_H_ */
